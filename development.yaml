@@ -1,0 +1,9 @@
+version: "3.0"
+services:
+    gateway:
+        build:
+            context: ./development
+            dockerfile: dockerfile
+        volumes:
+            - "./keys/development/cert.pem:/etc/letsencrypt/live/localhost/cert.pem"
+            - "./keys/development/key.pem:/etc/letsencrypt/live/localhost/key.pem"
