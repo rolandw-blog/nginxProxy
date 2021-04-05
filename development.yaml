@@ -7,4 +7,5 @@ services:
         volumes:
             - "./keys/development/cert.pem:/etc/letsencrypt/live/localhost/cert.pem"
             - "./keys/development/key.pem:/etc/letsencrypt/live/localhost/key.pem"
-            - "./development/html:/usr/share/nginx/html"
+            - "../content:/usr/share/nginx/html/content"
+            - "../managementUI/frontend/build:/usr/share/nginx/html/admin"

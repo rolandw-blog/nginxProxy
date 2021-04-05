@@ -5,11 +5,12 @@ USER root
 
 RUN mkdir /etc/nginx/sites-available
 RUN mkdir /etc/nginx/sites-enabled
+RUN mkdir /usr/share/nginx/html/landing
 RUN mkdir /etc/nginx/config
 RUN mkdir -p /etc/letsencrypt/live/localhost
 
 # Copy a simple landing page in for the gateway
-COPY ./html /usr/share/nginx/html
+COPY ./html /usr/share/nginx/html/landing
 
 # Copy the http config over
 COPY nginx.conf /etc/nginx/nginx.conf
