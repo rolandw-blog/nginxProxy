@@ -1,0 +1,10 @@
+version: "3.0"
+services:
+    gateway:
+        build:
+            context: ./production
+            dockerfile: dockerfile
+        volumes:
+            - "/etc/letsencrypt/live/rolandw.dev-0001/fullchain.pem:/etc/letsencrypt/live/rolandw.dev-0001/fullchain.pem"
+            - "/etc/letsencrypt/live/rolandw.dev-0001/privkey.pem:/etc/letsencrypt/live/rolandw.dev-0001/privkey.pem"
+            - "../content:/usr/share/nginx/html"
