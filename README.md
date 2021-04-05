@@ -3,7 +3,27 @@
 ## Running production
 
 Using [these](https://certbot.eff.org/lets-encrypt/debianbuster-nginx) instructions you can create a wildcard certificate for your domain.
-Ensure you have certificates installed to `/etc/letsencrypt/live/DOMAIN.COM-0001/{privkey.pem, fullchain.pem}`, then update the volume in `/production.yaml`.
+Ensure you have certificates installed to `/etc/letsencrypt/live/DOMAIN.COM-0001/{privkey.pem, fullchain.pem}`, then update the volume in production.yaml.
+
+```yaml
+volumes:
+    # Replace DOMAIN.COM with your own domain
+    - "/etc/letsencrypt/live/DOMAIN.COM-0001/fullchain.pem:/etc/letsencrypt/live/DOMAIN.COM/fullchain.pem"
+    - "/etc/letsencrypt/live/DOMAIN.COM-0001/privkey.pem:/etc/letsencrypt/live/DOMAIN.COM/privkey.pem"
+```
+
+Build the [management UI](https://github.com/rolandw-blog/managementUI) app.
+
+```none
+npm run build
+```
+
+This will place the apps contents into the build directory. Then ensure that you have the build mounted in your production.yaml like so.
+
+```yaml
+volumes:
+    - "../managementUI/frontend/build:/usr/share/nginx/html/admin"
+```
 
 Launch the gateway with.
 
@@ -26,7 +46,3 @@ Make sure that the `keys/development/{cert.pem, key.pem}` exist.
 ```none
 docker-compose build && docker-compose -f docker-compose.yaml -f development.yaml up
 ```
-
-## Running Production
-
-Not done yet!
