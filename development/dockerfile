@@ -12,6 +12,11 @@ RUN mkdir -p /etc/letsencrypt/live/localhost
 # Copy a simple landing page in for the gateway
 COPY ./html /usr/share/nginx/html/landing
 
+# Copy favicons to each site
+COPY html/favicon.ico /usr/share/nginx/html/landing/favicon.ico
+COPY html/favicon.ico /usr/share/nginx/html/admin/favicon.ico
+COPY html/favicon.ico /usr/share/nginx/html/content/favicon.ico
+
 # Copy the http config over
 COPY nginx.conf /etc/nginx/nginx.conf
 
