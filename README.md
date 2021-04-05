@@ -19,14 +19,14 @@ If you are running in development you can sign your own certificate like this. P
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 ```
 
-Next make sure that you have appropriate entries in your `/etc/hosts` file for the development domains you want to use.
+## Running Development
 
-```none
-127.0.0.1       localhost.com blog.localhost.com auth.localhost.com
-```
-
-Launch the gateway with.
+Make sure that the `keys/development/{cert.pem, key.pem}` exist.
 
 ```none
 docker-compose build && docker-compose -f docker-compose.yaml -f development.yaml up
 ```
+
+## Running Production
+
+Not done yet!
