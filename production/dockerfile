@@ -6,8 +6,9 @@ USER root
 RUN mkdir /etc/nginx/sites-available
 RUN mkdir /etc/nginx/sites-enabled
 RUN mkdir /usr/share/nginx/html/landing
+RUN mkdir /usr/share/nginx/html/dist
+RUN mkdir /usr/share/nginx/html/admin
 RUN mkdir /etc/nginx/config
-RUN mkdir /usr/share/nginx/html/content
 RUN mkdir -p /etc/letsencrypt/live/rolandw.dev-0001
 
 # Copy a simple landing page in for the gateway
@@ -16,7 +17,7 @@ COPY ./html /usr/share/nginx/html/landing
 # Copy favicons to each site
 COPY html/favicon.ico /usr/share/nginx/html/landing
 COPY html/favicon.ico /usr/share/nginx/html/admin
-COPY html/favicon.ico /usr/share/nginx/html/content
+COPY html/favicon.ico /usr/share/nginx/html/dist
 
 # Copy the http config over
 COPY nginx.conf /etc/nginx/nginx.conf
