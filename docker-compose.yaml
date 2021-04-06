@@ -2,7 +2,7 @@ version: "3.0"
 services:
     gateway:
         build:
-            context: ./production
+            context: ./development
             dockerfile: dockerfile
         container_name: gateway
         ports:

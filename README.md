@@ -2,6 +2,8 @@
 
 ## Running production
 
+Change the context to `context: ./production` in the root `/docker-compose.yaml` file.
+
 Using [these](https://certbot.eff.org/lets-encrypt/debianbuster-nginx) instructions you can create a wildcard certificate for your domain.
 Ensure you have certificates installed to `/etc/letsencrypt/live/DOMAIN.COM-0001/{privkey.pem, fullchain.pem}`, then update the volume in production.yaml.
 
@@ -30,6 +32,8 @@ docker-compose build && docker-compose -f docker-compose.yaml -f production.yaml
 ```
 
 ## Running development
+
+Change the context to `context: ./development` in the root `/docker-compose.yaml` file.
 
 If you are running in development you can sign your own certificate like this. Place `key.pem` and `cert.pem` in `development/keys`.
 
