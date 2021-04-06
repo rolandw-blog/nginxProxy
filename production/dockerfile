@@ -7,6 +7,7 @@ RUN mkdir /etc/nginx/sites-available
 RUN mkdir /etc/nginx/sites-enabled
 RUN mkdir /usr/share/nginx/html/landing
 RUN mkdir /etc/nginx/config
+RUN mkdir /usr/share/nginx/html/content
 RUN mkdir -p /etc/letsencrypt/live/rolandw.dev-0001
 
 # Copy a simple landing page in for the gateway

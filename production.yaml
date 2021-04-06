@@ -8,4 +8,4 @@ services:
             - "/etc/letsencrypt/live/rolandw.dev-0001/fullchain.pem:/etc/letsencrypt/live/rolandw.dev-0001/fullchain.pem"
             - "/etc/letsencrypt/live/rolandw.dev-0001/privkey.pem:/etc/letsencrypt/live/rolandw.dev-0001/privkey.pem"
             - "../content:/usr/share/nginx/html/content"
-            - "../managementUI/frontend/build:/usr/share/nginx/html/admin"
+            # - "../managementUI/frontend/build:/usr/share/nginx/html/admin"
