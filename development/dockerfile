@@ -27,6 +27,4 @@ COPY ./config /etc/nginx/config
 COPY ./sites-available /etc/nginx/sites-available
 RUN ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled
 
-RUN ls /etc/letsencrypt/live/localhost
-
 EXPOSE 443
