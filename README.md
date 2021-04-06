@@ -27,8 +27,6 @@ volumes:
     - "../managementUI/frontend/build:/usr/share/nginx/html/admin"
 ```
 
-Launch the gateway with.
-
 ```none
 docker-compose build && docker-compose -f docker-compose.yaml -f production.yaml up
 ```
@@ -39,13 +37,13 @@ Change the context to `context: ./development` in the root `/docker-compose.yaml
 
 If you are running in development you can sign your own certificate like this. Place `key.pem` and `cert.pem` in `development/keys`.
 
+Make sure that the files you generate for development are placed in `keys/development/{cert.pem, key.pem}`.
+
 ```none
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 ```
 
-## Running Development
-
-Make sure that the `keys/development/{cert.pem, key.pem}` exist.
+Launch the gateway with.
 
 ```none
 docker-compose build && docker-compose -f docker-compose.yaml -f development.yaml up
