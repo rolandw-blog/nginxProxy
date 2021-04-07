@@ -7,5 +7,7 @@ services:
         volumes:
             - "/etc/letsencrypt/live/rolandw.dev-0001/fullchain.pem:/etc/letsencrypt/live/rolandw.dev-0001/fullchain.pem"
             - "/etc/letsencrypt/live/rolandw.dev-0001/privkey.pem:/etc/letsencrypt/live/rolandw.dev-0001/privkey.pem"
+            # The blog content itself goes in .../dist
             - "../dist:/usr/share/nginx/html/dist"
-            - "/home/roland/blog/managementUI/frontend/build:/usr/share/nginx/html/admin"
+            # Static assets like PNGs go in .../dist/static
+            - "../blogBuilder/app/src/media:/usr/share/nginx/html/dist/static"
