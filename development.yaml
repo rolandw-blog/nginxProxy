@@ -7,5 +7,7 @@ services:
         volumes:
             - "./keys/development/cert.pem:/etc/letsencrypt/live/localhost/cert.pem"
             - "./keys/development/key.pem:/etc/letsencrypt/live/localhost/key.pem"
+            # The blog content itself goes in .../dist
             - "../dist:/usr/share/nginx/html/dist"
-            - "../managementUI/frontend/build:/usr/share/nginx/html/admin"
+            # Static assets like PNGs go in .../dist/static
+            - "../blogBuilder/app/src/media:/usr/share/nginx/html/dist/static"
