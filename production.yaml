@@ -11,3 +11,5 @@ services:
             - "../dist:/usr/share/nginx/html/dist"
             # Static assets like PNGs go in .../dist/static
             - "../blogBuilder/app/src/media:/usr/share/nginx/html/dist/static"
+            # Mount static admin portal code in .../html/admin
+            - "../managementUI/frontend/build:/usr/share/nginx/html/admin"
