@@ -31,6 +31,8 @@ volumes:
 docker-compose build && docker-compose -f docker-compose.yaml -f production.yaml up
 ```
 
+If you need to authenticate with keybase. Place `keybase.txt` in production/html.
+
 ## Running development
 
 Change the context to `context: ./development` in the root `/docker-compose.yaml` file.
