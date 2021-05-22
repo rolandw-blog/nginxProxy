@@ -1,2 +1,3 @@
 *.pem
 production/html/keybase.txt
+keys/development/*

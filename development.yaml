@@ -5,8 +5,8 @@ services:
             context: ./development
             dockerfile: dockerfile
         volumes:
-            - "./keys/development/cert.pem:/etc/letsencrypt/live/localhost/cert.pem"
-            - "./keys/development/key.pem:/etc/letsencrypt/live/localhost/key.pem"
+            - "./keys/development/cert.crt:/etc/letsencrypt/live/localhost/cert.crt"
+            - "./keys/development/key.key:/etc/letsencrypt/live/localhost/key.key"
             # The blog content itself goes in .../dist
             - "../dist:/usr/share/nginx/html/dist"
             # Static assets like PNGs go in .../dist/static

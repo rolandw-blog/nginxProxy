@@ -42,7 +42,7 @@ If you are running in development you can sign your own certificate like this. P
 Make sure that the files you generate for development are placed in `keys/development/{cert.pem, key.pem}`.
 
 ```none
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.key -out cert.crt
 ```
 
 Launch the gateway with.
