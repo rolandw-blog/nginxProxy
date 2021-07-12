@@ -8,6 +8,11 @@ services:
             - "./keys/development/cert.crt:/etc/letsencrypt/live/localhost/cert.crt"
             - "./keys/development/key.key:/etc/letsencrypt/live/localhost/key.key"
             # The blog content itself goes in .../dist
-            - "../dist:/usr/share/nginx/html/dist"
+            - "blog_content:/usr/share/nginx/html/dist"
             # Static assets like PNGs go in .../dist/static
             - "../blogBuilder/app/src/media:/usr/share/nginx/html/dist/static"
+
+# Using `external: true` causes docker to complain if the volume does not exist
+volumes:
+    blog_content:
+        external: true
