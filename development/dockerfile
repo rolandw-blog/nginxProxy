@@ -10,6 +10,7 @@ RUN mkdir /etc/nginx/config
 
 # Certificates go here
 RUN mkdir -p /etc/letsencrypt/live/localhost
+RUN mkdir -p /etc/letsencrypt/live/rolandw.dev-0001
 
 # Copy a simple landing page in for the gateway
 COPY ./html /usr/share/nginx/html/landing
