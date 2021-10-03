@@ -1,3 +1,4 @@
 *.pem
 production/html/keybase.txt
-keys/development/*
+keys/development/cert.crt
+keys/development/key.key
