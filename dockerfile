@@ -9,8 +9,7 @@ RUN mkdir -p /etc/nginx/config
 # RUN mkdir /usr/share/nginx/html/landing
 
 # Certificates go here
-RUN mkdir -p /etc/letsencrypt/live/localhost
-RUN mkdir -p /etc/letsencrypt/live/rolandw.dev-0001
+RUN mkdir -p /keys
 
 # copy favicon
 COPY ./html/favicon.ico /usr/share/nginx/html
