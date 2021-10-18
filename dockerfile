@@ -38,7 +38,6 @@ COPY ./development/nginx.conf /etc/nginx
 COPY ./development/config /etc/nginx/config
 COPY ./development/sites-available/. /etc/nginx/sites-available
 RUN ln -s sites-available/. ./sites-enabled
-COPY ./keys/development/. /etc/letsencrypt/live
 
 FROM nginx:latest as production
 WORKDIR /etc/nginx

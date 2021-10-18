@@ -1,1 +1,0 @@
-place cert.crt and key.key here
