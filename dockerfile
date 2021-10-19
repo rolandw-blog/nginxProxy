@@ -3,47 +3,47 @@ FROM nginx:latest as common
 # Just use root for this
 USER root
 
+# make sure nginx folders exist
 RUN mkdir -p /etc/nginx/sites-available
 RUN mkdir -p /etc/nginx/sites-enabled
-RUN mkdir -p /etc/nginx/config
-# RUN mkdir /usr/share/nginx/html/landing
 
-# Certificates go here
-RUN mkdir -p /etc/letsencrypt/live/localhost
-RUN mkdir -p /etc/letsencrypt/live/rolandw.dev-0001
+# routes go here
+RUN mkdir -p /etc/nginx/locations
 
-# copy favicon
-COPY ./html/favicon.ico /usr/share/nginx/html
-RUN chown -R nginx:nginx /usr/share/nginx/html/favicon.ico
+# keys are mounted here in a volume called "blog_nginx_proxy_certs"
+RUN mkdir -p /keys
 
 # prepare the volume
 RUN adduser --disabled-password --gecos "" node
-RUN mkdir -p /usr/share/nginx/html/dist  && chown node:node /usr/share/nginx/html/dist
-VOLUME /usr/share/nginx/html/dist
 
-# create dist
-# RUN mkdir -p /usr/share/nginx/html/dist
-# RUN echo "temp" > /usr/share/nginx/html/dist/index.html
-
-# Copy the config module bits over
-# COPY ./config /etc/nginx/config
-
+# Expose HTTPS port
 EXPOSE 443
 
-# Within the docker-compose.yaml you can specify a build.target: "development" || "production"
-# This will build the docker image with the appropriate configuration
+# copy location (route) data over
+COPY ./locations/ /etc/nginx/locations/
 
+# Copy sites-available to container
+COPY ./sites-available/. /etc/nginx/sites-available/
+
+# symlink sites-available to sites-enabled for nginx to read
+RUN ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
+
+# DEVELOPMENT ======================================================================================
 FROM nginx:latest as development
 WORKDIR /etc/nginx
-COPY ./development/nginx.conf /etc/nginx
-COPY ./development/config /etc/nginx/config
-COPY ./development/sites-available/. /etc/nginx/sites-available
-RUN ln -s sites-available/. ./sites-enabled
-COPY ./keys/development/. /etc/letsencrypt/live
 
+# Copy nginx config from common stage
+COPY --from=common /etc/nginx /etc/nginx
+
+# copy the dev nginx.conf over for development
+COPY ./development/nginx.conf /etc/nginx
+
+# # PRODUCTION =======================================================================================
 FROM nginx:latest as production
 WORKDIR /etc/nginx
+
+# Copy nginx config from common stage
+COPY --from=common /etc/nginx /etc/nginx
+
+# copy the dev nginx.conf over for development
 COPY ./production/nginx.conf /etc/nginx
-COPY ./production/config /etc/nginx/config
-COPY ./production/sites-available/. /etc/nginx/sites-available
-RUN ln -s sites-available/. ./sites-enabled
