@@ -22,29 +22,28 @@ EXPOSE 443
 # copy location (route) data over
 COPY ./locations/ /etc/nginx/locations/
 
+# Copy sites-available to container
+COPY ./sites-available/. /etc/nginx/sites-available/
+
+# symlink sites-available to sites-enabled for nginx to read
+RUN ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
+
 # DEVELOPMENT ======================================================================================
 FROM nginx:latest as development
 WORKDIR /etc/nginx
 
-# copy the dev nginx.conf over
+# Copy nginx config from common stage
+COPY --from=common /etc/nginx /etc/nginx
+
+# copy the dev nginx.conf over for development
 COPY ./development/nginx.conf /etc/nginx
 
-# copy and link the site configs over
-COPY ./development/sites-available/. /etc/nginx/sites-available
-RUN ln -s /etc/nginx/sites-available/. /etc/nginx/sites-enabled
-
-# get the locations (routes)
-COPY --from=common /etc/nginx/locations/ /etc/nginx/locations/
-
-# PRODUCTION =======================================================================================
+# # PRODUCTION =======================================================================================
 FROM nginx:latest as production
+WORKDIR /etc/nginx
 
-# copy the dev nginx.conf over
+# Copy nginx config from common stage
+COPY --from=common /etc/nginx /etc/nginx
+
+# copy the dev nginx.conf over for development
 COPY ./production/nginx.conf /etc/nginx
-
-# copy and link the site configs over
-COPY ./production/sites-available/. /etc/nginx/sites-available
-RUN ln -s /etc/nginx/sites-available/. /etc/nginx/sites-enabled
-
-# get the locations (routes)
-COPY --from=common /etc/nginx/locations/ /etc/nginx/locations/
