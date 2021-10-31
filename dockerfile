@@ -14,7 +14,10 @@ RUN mkdir -p /etc/nginx/locations
 RUN mkdir -p /keys
 
 # prepare the volume
-RUN adduser --disabled-password --gecos "" node
+# https://github.com/nodejs/docker-node/blob/cbbf60da587a7ca135b573f4c05810d88f04ace7/16/buster/Dockerfile
+# nginx needs to understand this user with id 1000
+RUN groupadd --gid 1000 node \
+    && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
 # Expose HTTPS port
 EXPOSE 443
