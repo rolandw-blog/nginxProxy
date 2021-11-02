@@ -41,6 +41,10 @@ COPY --from=common /etc/nginx /etc/nginx
 # copy the dev nginx.conf over for development
 COPY ./development/nginx.conf /etc/nginx
 
+# copy the group and user stuff over
+COPY --from=common /etc/group /etc/group
+COPY --from=common /etc/passwd /etc/passwd
+
 # # PRODUCTION =======================================================================================
 FROM nginx:latest as production
 WORKDIR /etc/nginx
@@ -50,3 +54,7 @@ COPY --from=common /etc/nginx /etc/nginx
 
 # copy the dev nginx.conf over for development
 COPY ./production/nginx.conf /etc/nginx
+
+# copy the group and user stuff over
+COPY --from=common /etc/group /etc/group
+COPY --from=common /etc/passwd /etc/passwd
