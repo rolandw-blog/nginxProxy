@@ -31,10 +31,30 @@ COPY ./sites-available/. /etc/nginx/sites-available/
 # symlink sites-available to sites-enabled for nginx to read
 RUN ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
 
+# These env vars will be used to configure nginx
+ARG BLOGBUILDER_PORT
+ARG BLOGWATCHER_PORT
+
+ENV BLOGBUILDER_PORT $BLOGBUILDER_PORT
+ENV BLOGWATCHER_PORT $BLOGWATCHER_PORT
+
+RUN echo "BLOGBUILDER_PORT=$BLOGBUILDER_PORT"
+RUN echo "BLOGWATCHER_PORT=$BLOGWATCHER_PORT"
+RUN find /etc/nginx/locations -type f -exec sed -i "s/\${BLOGWATCHER_PORT}/$BLOGWATCHER_PORT/g" {} \;
+RUN find /etc/nginx/locations -type f -exec sed -i "s/\${BLOGBUILDER_PORT}/$BLOGBUILDER_PORT/g" {} \;
+# RUN mkdir /scripts
+# COPY ./scripts/substitute_vars.sh /scripts/substitute_vars.sh
+# RUN chmod +x /scripts/substitute_vars.sh
+# RUN /scripts/substitute_vars.sh
+
+# RUN cat /etc/nginx/locations/blogwatcher.conf
+
 # DEVELOPMENT ======================================================================================
 FROM common as development
 WORKDIR /etc/nginx
+COPY ./development/nginx.conf /etc/nginx
 
 # # PRODUCTION =======================================================================================
 FROM common as production
 WORKDIR /etc/nginx
+COPY ./production/nginx.conf /etc/nginx
