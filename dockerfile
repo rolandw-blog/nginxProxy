@@ -17,7 +17,7 @@ RUN mkdir -p /keys
 # https://github.com/nodejs/docker-node/blob/cbbf60da587a7ca135b573f4c05810d88f04ace7/16/buster/Dockerfile
 # nginx needs to understand this user with id 1000
 RUN groupadd --gid 1000 node \
-    && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
 # Expose HTTPS port
 EXPOSE 443
@@ -31,30 +31,24 @@ COPY ./sites-available/. /etc/nginx/sites-available/
 # symlink sites-available to sites-enabled for nginx to read
 RUN ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
 
+# These env vars will be used to configure nginx
+ARG BLOGBUILDER_PORT
+ARG BLOGWATCHER_PORT
+
+ENV BLOGBUILDER_PORT $BLOGBUILDER_PORT
+ENV BLOGWATCHER_PORT $BLOGWATCHER_PORT
+
+RUN echo "BLOGBUILDER_PORT=$BLOGBUILDER_PORT"
+RUN echo "BLOGWATCHER_PORT=$BLOGWATCHER_PORT"
+RUN find /etc/nginx/locations -type f -exec sed -i "s/\${BLOGWATCHER_PORT}/$BLOGWATCHER_PORT/g" {} \;
+RUN find /etc/nginx/locations -type f -exec sed -i "s/\${BLOGBUILDER_PORT}/$BLOGBUILDER_PORT/g" {} \;
+
 # DEVELOPMENT ======================================================================================
-FROM nginx:latest as development
+FROM common as development
 WORKDIR /etc/nginx
-
-# Copy nginx config from common stage
-COPY --from=common /etc/nginx /etc/nginx
-
-# copy the dev nginx.conf over for development
 COPY ./development/nginx.conf /etc/nginx
 
-# copy the group and user stuff over
-COPY --from=common /etc/group /etc/group
-COPY --from=common /etc/passwd /etc/passwd
-
 # # PRODUCTION =======================================================================================
-FROM nginx:latest as production
+FROM common as production
 WORKDIR /etc/nginx
-
-# Copy nginx config from common stage
-COPY --from=common /etc/nginx /etc/nginx
-
-# copy the dev nginx.conf over for development
 COPY ./production/nginx.conf /etc/nginx
-
-# copy the group and user stuff over
-COPY --from=common /etc/group /etc/group
-COPY --from=common /etc/passwd /etc/passwd
