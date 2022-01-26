@@ -42,12 +42,6 @@ RUN echo "BLOGBUILDER_PORT=$BLOGBUILDER_PORT"
 RUN echo "BLOGWATCHER_PORT=$BLOGWATCHER_PORT"
 RUN find /etc/nginx/locations -type f -exec sed -i "s/\${BLOGWATCHER_PORT}/$BLOGWATCHER_PORT/g" {} \;
 RUN find /etc/nginx/locations -type f -exec sed -i "s/\${BLOGBUILDER_PORT}/$BLOGBUILDER_PORT/g" {} \;
-# RUN mkdir /scripts
-# COPY ./scripts/substitute_vars.sh /scripts/substitute_vars.sh
-# RUN chmod +x /scripts/substitute_vars.sh
-# RUN /scripts/substitute_vars.sh
-
-# RUN cat /etc/nginx/locations/blogwatcher.conf
 
 # DEVELOPMENT ======================================================================================
 FROM common as development
